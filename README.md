@@ -1,7 +1,7 @@
 # inkbird2mqtt
 
-A tool that listens for bluetooth Low Energy broadcasts via bluez, looking for
-Inkbird IBS-P01B broadcasts, and reporting them in to MQTT.
+A tool that listens for Bluetooth Low Energy broadcasts via bluez, looking for
+Inkbird IBS-P01B broadcasts; and subsequently broadcasts them via MQTT.
 
 ## Why?
 
