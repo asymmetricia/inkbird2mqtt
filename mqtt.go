@@ -33,7 +33,7 @@ import (
 
 var mqttHost = flag.String("mqtt-host", "localhost",
 	"hostname of the MQTT server to publish to")
-var mqttPrefix = flag.String("mqtt-prefix", "unifi",
+var mqttPrefix = flag.String("mqtt-prefix", "inkbird",
 	"a prefix for the mqtt space to publish, messages are published to "+
 		"{mqtt-prefix}/{mac}, with mac in format 00-11-22-...")
 var mqttPort = flag.Int("mqtt-port", 1883, "port used to connect to MQTT")

@@ -21,7 +21,7 @@ inkbird2mqtt [options]
   -mqtt-port int
     	port used to connect to MQTT (default 1883)
   -mqtt-prefix string
-    	a prefix for the mqtt space to publish, messages are published to {mqtt-prefix}/{mac}, with mac in format 00-11-22-... (default "unifi")
+    	a prefix for the mqtt space to publish, messages are published to {mqtt-prefix}/{mac}, with mac in format 00-11-22-... (default "inkbird")
   -mqtt-proto tcp
     	protocol used to connect to MQTT; options are tcp, `ssl`, `ws` (default "tcp")
 ```
