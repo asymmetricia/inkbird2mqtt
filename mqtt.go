@@ -43,6 +43,7 @@ var mqttProto = flag.String("mqtt-proto", "tcp", "protocol used to connect "+
 type Reading struct {
 	Address string
 	Value   float64
+	Battery int
 }
 
 func MqttReport(ctx context.Context, log logrus.FieldLogger, readings <-chan Reading) {
@@ -89,6 +90,17 @@ func MqttReport(ctx context.Context, log logrus.FieldLogger, readings <-chan Rea
 				1,
 				true,
 				strconv.FormatFloat(reading.Value, 'f', 2, 64))
+
+			if mqttToken.Error() == nil {
+				mqttToken = client.Publish(
+					filepath.Join(
+						*mqttPrefix,
+						strings.Replace(reading.Address, ":", "-", -1),
+						"battery"),
+					1,
+					true,
+					strconv.FormatInt(int64(reading.Battery), 10))
+			}
 
 			if err := mqttToken.Error(); err != nil {
 				log.WithError(err).Error("error while publishing")

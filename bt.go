@@ -22,6 +22,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/godbus/dbus/v5"
 	btApi "github.com/muka/go-bluetooth/api"
 	btAdapter "github.com/muka/go-bluetooth/bluez/profile/adapter"
 	"github.com/muka/go-bluetooth/bluez/profile/device"
@@ -113,10 +114,23 @@ func BluetoothPoll(ctx context.Context, log logrus.FieldLogger, adapter *btAdapt
 				// one entry- latest temp
 				if len(mfd) == 1 {
 					for temp := range mfd {
-						log.Printf("%f°C", float64(temp)/100)
+						var bat int
+						variant, ok := mfd[temp].(dbus.Variant)
+						if !ok {
+							log.Warningf("mfd is %T, not dbus.Variant", mfd[temp])
+						} else {
+							bytes, ok := variant.Value().([]byte)
+							if !ok {
+								log.Warningf("mfd variant value is %T, not []byte", variant.Value())
+							} else {
+								bat = int(bytes[5])
+							}
+						}
+						log.Printf("%f°C %d bat", float64(temp)/100, bat)
 						readings <- Reading{
 							Address: address,
 							Value:   float64(temp) / 100,
+							Battery: bat,
 						}
 					}
 				}
