@@ -81,6 +81,6 @@ func main() {
 	go MqttReport(ctx, log, readings)
 
 	sig := <-sigs
-	log.Print("exiting on signal %v", sig)
+	log.Printf("exiting on signal %v", sig)
 	cancel()
 }
